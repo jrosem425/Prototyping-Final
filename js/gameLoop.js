@@ -9,6 +9,8 @@ var frictionX = 0.8;
 var frictionY = 0.8;
 var gravity = 1;
 
+var difficultyTimer = 0;
+
 canvas = document.getElementById("canvas");
 context = canvas.getContext("2d");
 
@@ -85,17 +87,19 @@ function animate()
     player.x = currentLane * laneWidth + laneWidth / 2;
 
     
+    difficultyTimer++;
 
-    score++;
+    enemySpeed = 3 + difficultyTimer / 1000;
 
-   enemySpeed = 3 + score / 1000;
-
-    enemySpawnTime = 90 - score / 100;
+    enemySpawnTime = 90 - difficultyTimer / 100;
 
     if(enemySpawnTime < minEnemySpawnTime)
     {
         enemySpawnTime = minEnemySpawnTime;
     }
+
+
+   
 
 
     spawnEnemies();
@@ -146,9 +150,12 @@ function moveEnemies()
     {
         if(enemies[i].y > canvas.height + 100)
         {
+            score++;
             enemies.splice(i, 1);
         }
     }
+
+    
 }
 
 function checkEnemyCollision()
@@ -197,6 +204,8 @@ function drawText()
     context.font = "24px Arial";
     context.fillText("A = move left", 10, 30);
     context.fillText("D = move right", 10, 65);
+
+    context.fillText("Score: " + score, 10, 100);
    
 
     
