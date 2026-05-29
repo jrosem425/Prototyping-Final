@@ -10,8 +10,17 @@ var r = false;
 var upArrow = false;
 var downArrow = false;
 
+
+var mouseX = 0;
+var mouseY = 0;
+var mouseClicked = false;
+
+
 document.addEventListener("keydown", press);
 document.addEventListener("keyup", release);
+document.addEventListener("click", mouseClick);
+
+
 
 function press(e)
 {
@@ -92,4 +101,14 @@ function release(e)
     {
         r = false;
     }
+}
+
+function mouseClick(e)
+{
+    var rect = canvas.getBoundingClientRect();
+
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+
+    mouseClicked = true;
 }
