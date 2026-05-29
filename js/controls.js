@@ -5,6 +5,8 @@ var d = false;
 var w = false;
 var s = false;
 
+var r = false;
+
 var upArrow = false;
 var downArrow = false;
 
@@ -43,6 +45,13 @@ function press(e)
     {
         downArrow = true;
     }
+
+
+
+    if(e.keyCode == 82) // R
+    {
+        r = true;
+    }
 }
 
 function release(e)
@@ -76,5 +85,11 @@ function release(e)
      if(e.keyCode == 40)
     {
         downArrow = false;
+    }
+
+
+    if(e.keyCode == 82)
+    {
+        r = false;
     }
 }

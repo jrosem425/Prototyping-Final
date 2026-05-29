@@ -35,6 +35,7 @@ var minEnemySpawnTime = 25;
 
 var enemySpeed = 3;
 var score = 0;
+var highScore = 0;
 var gameOver = false;
 
 // player
@@ -45,13 +46,19 @@ timer = setInterval(animate, interval);
 function animate()
 {
     if(gameOver)
-{
-    drawLanes();
-    player.drawRect();
-    drawEnemies();
-    drawGameOverText();
-    return;
-}
+    {
+        drawLanes();
+        player.drawRect();
+        drawEnemies();
+        drawGameOverText();
+
+        if(r)
+        {
+            restartGame();
+        }
+
+        return;
+    }
     
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -151,6 +158,12 @@ function moveEnemies()
         if(enemies[i].y > canvas.height + 100)
         {
             score++;
+
+            if(score > highScore)
+            {
+                highScore = score;
+            }
+
             enemies.splice(i, 1);
         }
     }
@@ -206,6 +219,7 @@ function drawText()
     context.fillText("D = move right", 10, 65);
 
     context.fillText("Score: " + score, 10, 100);
+    context.fillText("High Score: " + highScore, 10, 135);
    
 
     
@@ -222,4 +236,28 @@ function drawGameOverText()
         canvas.width / 2 - 180,
         canvas.height / 2
     );
+
+    context.font = "30px Arial";
+    context.fillText(
+    "Press R to Play Again",
+    canvas.width / 2 - 140,
+    canvas.height / 2 + 60
+    );
+}
+
+
+function restartGame()
+{
+    score = 0;
+    gameOver = false;
+
+    enemies = [];
+
+    difficultyTimer = 0;
+    enemySpeed = 3;
+    enemySpawnTime = 90;
+
+    currentLane = 2;
+
+    player.x = currentLane * laneWidth + laneWidth / 2;
 }
